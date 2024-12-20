@@ -5,6 +5,6 @@ export type TBlog= {
     content: string; 
     author:Types.ObjectId; 
     isPublished: boolean; 
-    createdAt: Date; 
-    updatedAt: Date; 
+    createdAt?: Date; 
+    updatedAt?: Date; 
   }

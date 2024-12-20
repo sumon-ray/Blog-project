@@ -44,13 +44,15 @@ const globalErrorHandler: ErrorRequestHandler =  (err, req, res, next)=>{
    errorSources = simplifiedError?.errorSources
   }
 
+  
+
 
 
   res.status(statusCode).json({
     success:false,
      message,
      errorSources,
-    //  err,
+     err,
      stack: config.NODE_ENV === 'development'? err.stack : null
   })
  

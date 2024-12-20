@@ -1,19 +1,29 @@
-import QueryBuilder from "../../builder/QueryBuilder"
-import { AdminSearchableFields } from "./admin.constant"
-import { Admin } from "./admin.model"
+import AppError from "../../errors/AppError"
+import BlogModel from "../Blog/blog.model";
+import { UserModel } from "../User/user.model"
+import httpStatus from "http-status";
+const blockUser = async (userId: string) => {
+    const user = await UserModel.findById(userId);
+    
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, "User not found");
+    }
+  
+    user.isBlocked = true; 
+    await user.save(); 
+  
+    return { message: "User blocked successfully" };
+  };
 
-const getAllAdminsFromDB = async(query: Record<string, unknown>)=>{
-  const adminQuery = new QueryBuilder(Admin.find(), query)
-  .search(AdminSearchableFields)
-  .filter()
-  .sort()
-  .paginate()
-  .fields()
 
-  const result = await adminQuery.modelQuery;
-  return result
+const deleteBlog = async (id: string)=>{
+    const result = await BlogModel.findByIdAndDelete(id)
+    return result
 }
 
-export const AdminServices = {
-    getAllAdminsFromDB,
-  };
+
+
+export const AdminService = {
+    blockUser,
+    deleteBlog
+}

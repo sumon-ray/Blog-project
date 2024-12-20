@@ -1,19 +1,31 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { AdminServices } from "./admin.service";
+import { AdminService } from "./admin.service";
 import httpStatus from "http-status";
-const createAdminIntoDB = catchAsync(async(req,res)=>{
-    const result = AdminServices.getAllAdminsFromDB(req.query)
 
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'all admins recieved successfully',
-        data: result
-    })
-})
+const blockUser = catchAsync(async (req, res) => {
+    const {userId} = req.params
+ await AdminService.blockUser(userId);
 
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User blocked successfully"
+  });
+});
 
-export const adminController = {
-    createAdminIntoDB
-}
+const deleteBlog = catchAsync(async (req, res) => {
+  const result = await AdminService.deleteBlog(req.params.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Delete blog successfully",
+    data: result,
+  });
+});
+
+export const AdminController = {
+  blockUser,
+  deleteBlog,
+};

@@ -1,7 +1,13 @@
 import { Router } from "express";
-import { adminController } from "./admin.controller";
+import { AdminController } from "./admin.controller";
+import { authenticate } from "../../middlwares/authenticate";
+import { adminOnly } from "../../middlwares/adminOnly";
+import catchAsync from "../../utils/catchAsync";
 
 const router = Router()
-router.post('/', adminController.createAdminIntoDB)
+router.patch('/users/:userId/block',authenticate, adminOnly, catchAsync(AdminController.blockUser))
+router.delete('/blogs/:id', authenticate, adminOnly,  catchAsync(AdminController.deleteBlog))
 
 export const AdminRoute = router
+
+
