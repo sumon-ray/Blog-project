@@ -7,10 +7,16 @@ import { authorize } from "../../middlwares/authorize";
 const router = Router();
 
 router.post(
-  "/create-blog",
+  "/",
   authenticate, 
   authorize(["user"]), 
   catchAsync(BlogController.createBlogIntoDB) 
+);
+
+// public api
+router.get(
+  "/",
+  catchAsync(BlogController.getAllBlogsFromDB) 
 );
 
 router.patch(

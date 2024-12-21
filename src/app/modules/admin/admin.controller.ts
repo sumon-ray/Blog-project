@@ -1,5 +1,5 @@
 import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
+import sendResponses from "../../utils/sendResponses";
 import { AdminService } from "./admin.service";
 import httpStatus from "http-status";
 
@@ -7,7 +7,7 @@ const blockUser = catchAsync(async (req, res) => {
     const {userId} = req.params
  await AdminService.blockUser(userId);
 
-  sendResponse(res, {
+  sendResponses(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "User blocked successfully"
@@ -15,13 +15,13 @@ const blockUser = catchAsync(async (req, res) => {
 });
 
 const deleteBlog = catchAsync(async (req, res) => {
-  const result = await AdminService.deleteBlog(req.params.id);
+ await AdminService.deleteBlog(req.params.id);
 
-  sendResponse(res, {
+  sendResponses(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Delete blog successfully",
-    data: result,
+    // data: result,
   });
 });
 

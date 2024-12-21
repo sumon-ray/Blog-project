@@ -38,13 +38,13 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     console.error("Authentication error:", error);
 
     if (error instanceof jwt.JsonWebTokenError) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid token!');
+      return next(new AppError(httpStatus.UNAUTHORIZED, 'Invalid token!'));
     }
 
     if (error instanceof AppError) {
-      throw error;
+      return next(error);
     }
 
-    throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'An unexpected error occurred!');
+    return next(new AppError(httpStatus.INTERNAL_SERVER_ERROR, 'An unexpected error occurred!'));
   }
 };
