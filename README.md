@@ -2,56 +2,91 @@
 # Car Store  
 # Link- https://car-store-amber.vercel.app/
 
+# Blogging Platform Backend
 
-The **Car Store** is a web application designed to manage the inventory and orders of cars in a store. It provides a robust API that allows users to perform CRUD operations on car data, create orders, and manage car availability. This project utilizes **Node.js**, **Express**, **MongoDB**, and **Mongoose**.
-
+## Overview
+The Blogging Platform is a backend application designed to facilitate a blogging system where users can create, update, and delete their blogs. The platform supports two user roles: Admin and User, each with specific permissions. The application is built using TypeScript, Node.js, Express.js, and MongoDB with Mongoose.
 
 ## Features
+- **User Roles**:
+  - **Admin**: 
+    - Manages users and blogs.
+    - Can block users and delete any blog.
+  - **User**: 
+    - Registers and logs in.
+    - Can create, update, and delete their own blogs.
 
-- **CRUD Operations for Cars**: Create, Read, Update, and Delete car data, including fields such as brand, model, price, quantity, and availability.
+- **Authentication & Authorization**:
+  - Secure authentication using JWT.
+  - Role-based access control to differentiate between Admin and User actions.
 
-  
-- **Order Management**: Users can place orders for cars, featuring email validation, stock quantity checks, and total price calculation.
+- **Blog API**:
+  - Public API for reading blogs with search, sort, and filter functionalities.
 
-  
-- **Stock Management**: The system automatically updates car quantities when an order is placed, ensuring accurate inventory tracking.
-
-  
-- **Email Validation**: Validates customer emails before creating an order.
-
-  
-- **Error Handling**: Comprehensive error handling for scenarios like invalid input, insufficient stock, and missing data.
-
-  
-- **Data Validation**: Mongoose-based validation for all fields to ensure data integrity.
-
-
-
-## Technology Stack
-### Backend
-- **Node.js**
-- **Express.js**
-- **MongoDB** with **Mongoose ORM**
-  
-### Validation
-- **Mongoose Schema Validation**
-- **Email and Quantity Validation**
-
-### Error Handling
-- Custom error handling for common issues like missing data or insufficient stock. 
 ## API Endpoints
-- **Car CRUD**: `/api/cars`
-- **Order CRUD**: `/api/orders`
+### Authentication
+- **Register User**: `POST /api/auth/register`
+- **Login User**: `POST /api/auth/login`
 
-## Getting Started
-### Prerequisites 
+### Blog Management
+- **Create Blog**: `POST /api/blogs`
+- **Update Blog**: `PATCH /api/blogs/:id`
+- **Delete Blog**: `DELETE /api/blogs/:id`
+- **Get All Blogs**: `GET /api/blogs`
 
+### Admin Actions
+- **Block User**: `PATCH /api/admin/users/:userId/block`
+- **Delete Blog**: `DELETE /api/admin/blogs/:id`
 
-Before running the project locally, ensure you have the following installed:
+## Models
+### User Model
+- `name`: string
+- `email`: string
+- `password`: string
+- `role`: "admin" | "user"
+- `isBlocked`: boolean
+- `createdAt`: Date
+- `updatedAt`: Date
 
-- **Node.js**: [Install Node.js](https://nodejs.org/)
-  
-- **MongoDB**: [Install MongoDB](https://www.mongodb.com/try/download/community) or use MongoDB Atlas for a cloud-based database.
+### Blog Model
+- `title`: string
+- `content`: string
+- `author`: ObjectId
+- `isPublished`: boolean
+- `createdAt`: Date
+- `updatedAt`: Date
 
-   git clone https://github.com/yourusername/car-store.git
-   cd car-store
+## Error Handling
+The application implements structured error handling to provide meaningful feedback for various error types, including validation errors, authentication errors, and internal server errors.
+
+## Technologies Used
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+
+## Setup Instructions
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+   - Create a `.env` file in the root directory and add the necessary environment variables (e.g., `JWT_SECRET`, `JWT_EXPIRES_IN`, MongoDB connection string).
+
+4. Start the server:
+   ```bash
+   npm start
+   ```
+
+## Conclusion
+This backend application provides a robust foundation for a blogging platform, ensuring secure user authentication and role-based access control. The API is designed to be user-friendly and efficient, allowing for easy integration with a frontend application.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
